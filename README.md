@@ -1,3 +1,3 @@
 # urjaacharya.github.io
 
-This is my attempt at teaching myself javascript along with some html an css.
+This is my attempt at teaching myself javascript along with some html and css.
