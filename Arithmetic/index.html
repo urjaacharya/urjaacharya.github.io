@@ -1,6 +1,428 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  Hello World!
-  </head>
+	<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<link href="css.css" rel="stylesheet" type="text/css">
+	<link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two' rel='stylesheet' type='text/css'>
+	<title>The Arithmetic Game
+	</title>
+</head>
+
+<body>
+	<h1><a href="">The Arithmetic Game </a>
+      </h1>
+	<div class="game_area">
+		<div class="options">
+			<div class="rradio">
+				<input class="radio_item" id="Kid_Mode" name="Difficulty" type="radio">
+				<label for="Kid_Mode">Kid Mode
+				</label><br>
+				<input class="radio_item" checked id="Easy" name="Difficulty" type="radio">
+				<label for="Easy">Easy
+				</label><br>
+				<input class="radio_item" id="Normal" name="Difficulty" type="radio">
+				<label for="Normal">Normal
+				</label><br>
+				<input class="radio_item" id="Difficult" name="Difficulty" type="radio">
+				<label for="Difficult">Difficult
+				</label>
+			</div>
+			<div class="bbutton">
+				<input class="button" id="button1" onclick="toggle()" type="button" value="New Game">
+			</div>
+		</div>
+		<div class="display">
+			<script>
+				var i = [];
+				window.onload = function() {
+					window.yearr = new Date().getFullYear();
+					document.getElementById("yearr").innerHTML = [yearr];
+				}
+				var timer = [];
+				var seconds = [];
+
+				function toggle() {
+					document.getElementById("Timer").innerHTML = "";
+					if (document.getElementById("button1").value != "New Game") {
+						show_ans();
+						document.getElementById("button1").value = "New Game";
+						clearInterval(timer);
+					} else {
+						disp();
+						if (document.getElementById('Kid_Mode').checked) {
+							seconds = 60;
+						} else if (document.getElementById('Easy').checked) {
+							seconds = 60;
+						} else if (document.getElementById('Normal').checked) {
+							seconds = 30;
+						} else {
+							seconds = 30;
+						}
+						document.getElementById("button1").value = "Show Answer" + " (" + seconds + ")";
+						timer = setInterval(function() {
+							seconds = seconds - 1;
+							document.getElementById("button1").value = "Show Answer" + " (" + seconds + ")";
+							if (seconds <= 0) {
+								show_ans();
+								document.getElementById("button1").value = "New Game";
+								document.getElementById("Timer").innerHTML = "Time Up!!";
+								clearInterval(timer);
+							}
+						}, 1000);
+					}
+				}
+
+				//from http://www.technicaladvices.com/2015/03/03/javascript-getting-all-possible-permutations/
+				//Function to get Permutation with repetition function
+				var perm_w_reps = function(array, size, initialStuff, output) {
+						if (initialStuff.length >= size) {
+							output.push(initialStuff);
+						} else {
+							for (var i = 0; i < array.length; ++i) {
+								perm_w_reps(array, size, initialStuff.concat(array[i]), output);
+							}
+						}
+					}
+					//End of function to get Permutation with repetition function
+					//End of stuff from http://www.technicaladvices.com/2015/03/03/javascript-getting-all-possible-permutations/
+
+				//Function to round int to a multiple of m
+				function mround(int, m) {
+					if (int % m < m / 2) {
+						return (int - int % m);
+					} else if (int % m == 0) {
+						return (int);
+					} else {
+						return (int + (m - int % m));
+					}
+				}
+				//End of function to round int to a multiple of m
+
+				//Heap Permutation algorithm
+				function heap_permute(n, array, permutation) {
+					if (n == 1) {
+						var perms = [];
+						perms = array;
+						for (var i = 0; i < perms.length; i++) {
+							var a = perms[i];
+							permutation.push(a);
+						}
+					} else {
+						for (var j = 0; j < n; j++) {
+							heap_permute(n - 1, array, permutation);
+							if ((n - 1) % 2 == 0) {
+								var temp = array[j];
+								array[j] = array[n - 1];
+								array[n - 1] = temp;
+							} else {
+								var temp2 = array[0];
+								array[0] = array[n - 1];
+								array[n - 1] = temp2;
+							}
+						}
+					}
+				}
+				//End of heap permutation algorithm
+
+				//Function to initiate 2d algorithm
+				function array2d(length) {
+					var output = [];
+					for (i = 0; i < length; i++) {
+						output[i] = [];
+					}
+					return output;
+				}
+				//End of function to initiate 2d algorithm
+
+				function disp() {
+					var j = [];
+					var used_ints_rows = [];
+					var op_order_rows = [];
+					var sz = [];
+					var operations = ['a', 's', 'm', 'd'];
+					var goal = [];
+					var ints = [];
+					ints.length = 0;
+					var op_order = [];
+					op_order.length = 0;
+					var opso = [];
+					var used_nums = [];
+					used_nums.length = 0;
+					var numsu = [];
+
+					if (document.getElementById('Kid_Mode').checked || document.getElementById('Easy').checked) {
+						sz = 4;
+					} else {
+						sz = 5;
+					}
+
+					var su = 1; //small integers upper limit
+					var sl = 12; // small integers lower limit
+					var bu = 100; //big upper
+					var bl = 15; //big lower
+
+					ints.length = sz;
+					for (i = 0; i < sz; i++) {
+						if (i <= sz / 2) {
+							ints[i] = Math.floor((Math.random() * (su - sl)) + sl);
+						} else {
+							if (document.getElementById('Difficult').checked) {
+								ints[i] = Math.floor((Math.random() * (bu - bl)) + bl);
+							} else {
+								ints[i] = mround(Math.floor((Math.random() * (bu - bl)) + bl), 5);
+							}
+						}
+					}
+
+					ints.sort(function(a, b) {
+						return b - a
+					});
+
+					for (i = 1; i < sz; i++) {
+						if (ints[i] == ints[i - 1]) {
+							if (ints[i] > 10) {
+								ints[i] = ints[i] + 5;
+							} else {
+								ints[i] = ints[i] + 1;
+							}
+						}
+					}
+
+					if (document.getElementById('Kid_Mode').checked) {
+						goal = mround(Math.floor((Math.random() * 130) + 120), 5);
+					} else {
+						goal = Math.floor((Math.random() * 879) + 120);
+					}
+
+					//ints = [85,9,4,5,7] //For testing specific cases
+					//goal = 425; //For testing specific cases
+
+					window.goal2 = goal;
+
+					//Get all permutation of operations with repetition
+					var perm_ops = [];
+					var num_ops = (ints.length - 1);
+					perm_w_reps(operations, num_ops, [], perm_ops);
+					var length_ope = perm_ops.length;
+
+					//Get permutation of the integers without repetition
+					var pperm_ints = [];
+
+					heap_permute(ints.length, ints, pperm_ints);
+					var perm_ints = array2d(pperm_ints.length / ints.length);
+
+					i = 0;
+
+					for (j = 0; j < pperm_ints.length; j++) {
+						if (j % ints.length == 0 && j > 0) {
+							i = i + 1;
+						}
+						perm_ints[i][j % ints.length] = pperm_ints[j];
+					}
+
+
+					var len_p_ints = perm_ints.length;
+					var pp_ops = [];
+					for (i = 0; i < len_p_ints * length_ope; i++) {
+						pp_ops[i] = perm_ops[i % length_ope];
+					}
+
+					var pp_ints = [];
+					var flag1 = 0;
+					for (i = 0; i < len_p_ints * length_ope; i++) {
+						if (i % length_ope == 0 && i > 0) {
+							flag1 = flag1 + 1;
+						}
+						pp_ints[i] = perm_ints[flag1];
+					}
+
+					var calc_ans = [];
+					for (i = 0; i < len_p_ints * length_ope; i++) {
+						calc_ans[i] = [];
+						calc_ans[i][0] = pp_ints[i][0];
+					}
+
+					var answ = 0;
+					var diff = goal;
+					var flag2 = 0; //Checks if exact solution has been found at least once
+					var flag3 = 0; //Stores the numbers of integers used to reach solution				
+					var flag4 = sz + 1; //Checks if an exact solution is shorter than previous exact solution				
+
+					for (i = 0; i < len_p_ints * length_ope; i++) {
+
+						for (j = 0; j < sz - 1; j++) {
+							if (calc_ans[i][j] < 0) {
+								calc_ans[i][j + 1] = -2;
+							} else {
+								if (pp_ops[i][j] == 'a') {
+									calc_ans[i][j + 1] = calc_ans[i][j] + pp_ints[i][j + 1];
+								} else if (pp_ops[i][j] == 'm') {
+									calc_ans[i][j + 1] = calc_ans[i][j] * pp_ints[i][j + 1];
+								} else if (pp_ops[i][j] == 's') {
+									if ((calc_ans[i][j] - pp_ints[i][j + 1]) > 0) {
+										calc_ans[i][j + 1] = calc_ans[i][j] - pp_ints[i][j + 1];
+									} else {
+										calc_ans[i][j + 1] = -2;
+									}
+								} else if (pp_ops[i][j] == 'd') {
+									if ((calc_ans[i][j] % pp_ints[i][j + 1]) === 0) {
+										calc_ans[i][j + 1] = calc_ans[i][j] / pp_ints[i][j + 1];
+									} else {
+										calc_ans[i][j + 1] = -2;
+									}
+								}
+							}
+							if (calc_ans[i][j + 1] == goal && (j + 2) < flag4) { //Calcuate results if exact goal is met
+								flag4 = j + 2;
+								window.answ = calc_ans[i][j + 1];
+								used_ints_rows = pp_ints[i];
+								window.used_nums = used_ints_rows.slice(0, j + 2);
+								op_order_rows = pp_ops[i];
+								window.op_order = op_order_rows.slice(0, j + 1);
+								flag2 = 1;
+								flag3 = j + 2;
+							} else if ((Math.abs(calc_ans[i][j + 1] - goal) < diff) && flag2 == 0) { //Calculate results if exact goal is not met
+								flag5 = j + 2;
+								diff = Math.abs(calc_ans[i][j + 1] - goal);
+								window.answ = calc_ans[i][j + 1];
+								used_ints_rows = pp_ints[i];
+								window.used_nums = used_ints_rows.slice(0, j + 2);
+								op_order_rows = pp_ops[i];
+								window.op_order = op_order_rows.slice(0, j + 1);
+								flag3 = j + 2;
+							}
+						}
+					}
+					used_nums.length = flag3;
+					op_order.length = flag3 - 1;
+					document.getElementById("difference").innerHTML = [];
+					document.getElementById("Goal").innerHTML = [goal];
+					document.getElementById("Goal_txt1").innerHTML = ["Your goal is "];
+					document.getElementById("Goal_txt2").innerHTML = [" and the integers are "];
+
+					ints.sort(function(a, b) {
+						return b - a
+					});
+
+					for (i = 0; i < 5; i++) {
+						var id3 = "ints" + i;
+						var ints_i = ints[i];
+						document.getElementById(id3).innerHTML = [ints_i];
+					}
+					for (i = 0; i < 5; i++) {
+						var id2 = "numsu" + i;
+						numsu = [];
+						document.getElementById(id2).innerHTML = [numsu];
+					}
+					for (i = 0; i < 4; i++) {
+						var id1 = "opso" + i;
+						opso = [];
+						document.getElementById(id1).innerHTML = [opso];
+					}
+					document.getElementById("answer").innerHTML = [];
+					document.getElementById("answer_txt1").innerHTML = [];
+					document.getElementById("answer_txt2").innerHTML = [];
+					document.getElementById("difference_txt").innerHTML = [];
+					prnth = [];
+					prnth.length = 0;
+				}
+
+				function show_ans() {
+					var prnth = []; //parenthesis
+					var p_len = [];
+
+					prnth.length = used_nums.length;
+					p_len = prnth.length;
+					prnth[0] = Array(used_nums.length).join("("); //repeat '(' for one less than number of integers used
+					for (i = 1; i < p_len; i++) {
+						prnth[i] = ")";
+					}
+
+					for (i = 0; i < 5; i++) {
+						var id2 = "numsu" + i;
+						if (i == 0) {
+							numsu = prnth[i] + used_nums[i];
+						} else if (i >= p_len) {
+							numsu = [];
+						} else {
+							numsu = used_nums[i] + prnth[i];
+						}
+						document.getElementById(id2).innerHTML = [numsu];
+					}
+					for (i = 0; i < 4; i++) {
+						var id1 = "opso" + i;
+						if (op_order[i] == "m") {
+							opso = "&#215";
+						} else if (op_order[i] == "a") {
+							opso = "+";
+						} else if (op_order[i] == "s") {
+							opso = "-";
+						} else if (op_order[i] == "d") {
+							opso = "/";
+						} else {
+							opso = [];
+						}
+						document.getElementById(id1).innerHTML = [opso];
+					}
+					document.getElementById("difference").innerHTML = [Math.abs(goal2 - answ)];
+					document.getElementById("difference_txt").innerHTML = ["Absolute difference, | " + goal2 + " - " + answ + " |, is "];
+					document.getElementById("answer").innerHTML = [answ];
+					document.getElementById("answer_txt1").innerHTML = ["Closest answer is "];
+					document.getElementById("answer_txt2").innerHTML = [" computed as "];
+				}
+			</script>
+			<p>
+				<span id="Goal_txt1">
+				</span>
+				<span class="goal" id="Goal"></span>
+				<span id="Goal_txt2"></span>
+				<span class="integers" id="ints0"></span>
+				<span class="integers" id="ints1"></span>
+				<span class="integers" id="ints2"></span>
+				<span class="integers" id="ints3"></span>
+				<span class="integers" id="ints4"></span>
+			</p>
+			<p>
+				<span id="answer_txt1">
+				</span>
+				<span class="ans" id="answer">
+				</span>
+				<span id="answer_txt2">
+				</span>
+				<span class="numbers_usedd" id="numsu0">
+				</span>&nbsp;<span class="operations_used" id="opso0">
+				</span>&nbsp;<span class="numbers_usedd" id="numsu1">
+				</span>&nbsp;<span class="operations_used" id="opso1">
+				</span>&nbsp;<span class="numbers_usedd" id="numsu2">
+				</span>&nbsp;<span class="operations_used" id="opso2">
+				</span>&nbsp;<span class="numbers_usedd" id="numsu3">
+				</span>&nbsp;<span class="operations_used" id="opso3">
+				</span>&nbsp;<span class="numbers_usedd" id="numsu4">
+				</span>
+			</p>
+			<p>
+				<span id="difference_txt">
+				</span>
+				<span class="diff" id="difference">
+				</span>
+			</p>
+			<p> <span class="Timer" id="Timer"></span>
+			</p>
+		</div>
+	</div>
+	<footer>
+		<span class="howto">How to play</span>
+		<ol type="1">
+			<li>Click on 'New Game' to generate a new set of integers and a goal.</li>
+			<li>Carry out addition, subtraction, multiplication, or division between the integers to get an answer equal or closest to the goal. Each integer can be used only once. Every integer does not have to be used.</li>
+			<li>When the time is up or when the 'Show Answer' button is clicked, a solution (among several potential solutions) will be shown. Compare your solution with the computer's answer.</li>
+		</ol>
+		<hr>
+		<span class="yearr" id="yearr">
+		  </span> - Created by Urja Acharya (with a little help from <a target="_blank" href="https://github.com/darshanbaral">Darshan Baral</a>).
+		<hr> Conceptually similar to the 'numbers round' of the <a target="_blank" href="https://en.wikipedia.org/wiki/Countdown_%28game_show%29#Numbers_round">Countdown</a> gameshow.
+	</footer>
+</body>
+
 </html>

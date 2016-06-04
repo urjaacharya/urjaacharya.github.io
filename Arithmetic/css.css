@@ -1,0 +1,187 @@
+h1 {
+font-family:'Shadows Into Light Two', cursive,'Trebuchet MS',Helvetica,sans-serif;
+text-align:center;
+font-size:40px;
+border-radius:10px;
+height:50px;
+width:720px;
+text-decoration:underline;
+margin:2px auto 10px;
+}
+
+h2 {
+font-size:15px;
+text-decoration:underline;
+}
+
+.game_area {
+width:700px;
+border-radius:10px;
+height:250px;
+margin:auto auto 10px;
+padding:10px;
+}
+
+span {
+text-align:center;
+font-size:15px;
+text-indent:0;
+}
+
+span.integers {
+border-radius:4px;
+display:inline-block;
+background-color:#282af5;
+font-weight:700;
+color:#fff;
+width:30px;
+padding:1px;
+}
+
+span.goal {
+border-radius:4px;
+font-weight:700;
+display:inline-block;
+width:40px;
+color:#fff;
+background-color:#5abf41;
+padding:1px;
+}
+
+span.ans,span.diff {
+font-weight:700;
+text-decoration:underline;
+}
+
+.yearr {
+font-size:12px;
+}
+
+body {
+background-color:#faf8ef;
+font-family:'Trebuchet MS',Helvetica,sans-serif;
+}
+
+p {
+font-size:20px;
+text-align:left;
+text-indent:25px;
+}
+
+.Timer {
+color:red;
+font-weight:700;
+font-size:20px;
+}
+
+.button {
+background-color:#7bba67;
+border-radius:5px;
+color:#000;
+border:1px solid #e7e7e7;
+text-align:center;
+text-decoration:none;
+display:inline-block;
+font-size:18px;
+transition-duration:.2s;
+cursor:pointer;
+width:90px;
+height:90px;
+white-space:normal;
+font-family:'Shadows Into Light Two', cursive,'Trebuchet MS',Helvetica,sans-serif;
+margin:15px 2px 0 0;
+padding:10px;
+}
+
+.radio_item {
+display:none!important;
+}
+
+label {
+background-color:#fff;
+border:1px solid #e7e7e7;
+border-radius:2px;
+cursor:pointer;
+display:inline-block;
+width:72px;
+font-family:'Trebuchet MS',Helvetica,sans-serif;
+margin:0 auto 7px;
+padding:2px 0;
+}
+
+.radio_item:checked + label {
+border:1px solid #9f9f9f;
+background-color:#7bba67;
+}
+
+hr {
+display:block;
+height:1px;
+border:0;
+border-top:1px solid #ccc;
+width:100%;
+margin:5px auto;
+}
+
+footer {
+background-color:#f2f0f0;
+font-family:'Trebuchet MS',Helvetica,sans-serif;
+font-size:12px;
+border-radius:10px;
+width:700px;
+margin:auto;
+padding:10px;
+}
+
+.howto {
+text-decoration:underline;
+}
+
+ol {
+margin-top:2px;
+}
+
+a:link {
+text-decoration:none;
+color:#4a4a4a;
+}
+
+a:hover {
+background-color:#9f9f9f;
+}
+
+.options {
+float:left;
+width:120px;
+border-right:4px double #ed8d6e;
+background-color:#f6fcfe;
+padding:5px 0;
+height:250px;
+}
+
+.display {
+float:left;
+line-height:170%;
+width:550px;
+background-color:#f6fcfe;
+background-image:linear-gradient(90deg,#eee.02em,transparent.1em), linear-gradient(#eee.02em,transparent.1em);
+background-size:1.3em 1.3em;
+height:250px;
+border-radius:4px;
+font-size:20px;
+font-family:'Trebuchet MS',Helvetica,sans-serif;
+margin:auto auto 10px;
+padding:5px 0;
+}
+
+span.integers:empty,span.goal:empty {
+display:none;
+}
+
+.button:hover,label:hover {
+background-color:#b1e6a1;
+}
+
+.rradio,.bbutton {
+text-align:center;
+}
