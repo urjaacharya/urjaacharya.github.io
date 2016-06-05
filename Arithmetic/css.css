@@ -9,22 +9,16 @@ text-decoration:underline;
 margin:2px auto 10px;
 }
 
-h2 {
-font-size:15px;
-text-decoration:underline;
-}
-
 .game_area {
 width:700px;
 border-radius:10px;
-height:250px;
+height:310px;
 margin:auto auto 10px;
 padding:10px;
 }
 
 span {
 text-align:center;
-font-size:15px;
 text-indent:0;
 }
 
@@ -59,11 +53,9 @@ font-size:12px;
 
 body {
 background-color:#faf8ef;
-font-family:'Trebuchet MS',Helvetica,sans-serif;
 }
 
 p {
-font-size:20px;
 text-align:left;
 text-indent:25px;
 }
@@ -82,14 +74,14 @@ border:1px solid #e7e7e7;
 text-align:center;
 text-decoration:none;
 display:inline-block;
-font-size:18px;
+font-size:20px;
 transition-duration:.2s;
 cursor:pointer;
-width:90px;
-height:90px;
+width:100px;
+height:100px;
 white-space:normal;
 font-family:'Shadows Into Light Two', cursive,'Trebuchet MS',Helvetica,sans-serif;
-margin:15px 2px 0 0;
+margin:5px 2px 0 0;
 padding:10px;
 }
 
@@ -103,9 +95,10 @@ border:1px solid #e7e7e7;
 border-radius:2px;
 cursor:pointer;
 display:inline-block;
-width:72px;
+width:100px;
+height:25px;
 font-family:'Trebuchet MS',Helvetica,sans-serif;
-margin:0 auto 7px;
+margin:0 auto 20px;
 padding:2px 0;
 }
 
@@ -156,21 +149,21 @@ width:120px;
 border-right:4px double #ed8d6e;
 background-color:#f6fcfe;
 padding:5px 0;
-height:250px;
+height:310px;
 }
 
 .display {
 float:left;
-line-height:170%;
+line-height:140%;
 width:550px;
 background-color:#f6fcfe;
 background-image:linear-gradient(90deg,#eee.02em,transparent.1em), linear-gradient(#eee.02em,transparent.1em);
 background-size:1.3em 1.3em;
-height:250px;
+height:310px;
 border-radius:4px;
 font-size:20px;
 font-family:'Trebuchet MS',Helvetica,sans-serif;
-margin:auto auto 10px;
+margin:auto auto 5px;
 padding:5px 0;
 }
 
