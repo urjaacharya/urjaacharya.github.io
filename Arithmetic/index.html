@@ -299,7 +299,7 @@
 					document.getElementById("difference").innerHTML = [];
 					document.getElementById("Goal").innerHTML = [goal];
 					document.getElementById("Goal_txt1").innerHTML = ["Your goal is "];
-					document.getElementById("Goal_txt2").innerHTML = [" and the integers are "];
+					document.getElementById("Goal_txt2").innerHTML = [" The integers are "];
 
 					ints.sort(function(a, b) {
 						return b - a
@@ -368,14 +368,16 @@
 					document.getElementById("difference").innerHTML = [Math.abs(goal2 - answ)];
 					document.getElementById("difference_txt").innerHTML = ["Absolute difference, | " + goal2 + " - " + answ + " |, is "];
 					document.getElementById("answer").innerHTML = [answ];
-					document.getElementById("answer_txt1").innerHTML = ["Closest answer is "];
-					document.getElementById("answer_txt2").innerHTML = [" computed as "];
+					document.getElementById("answer_txt1").innerHTML = ["Answer, "];
+					document.getElementById("answer_txt2").innerHTML = [", is computed as "];
 				}
 			</script>
 			<p>
 				<span id="Goal_txt1">
 				</span>
-				<span class="goal" id="Goal"></span>
+				<span class="goal" id="Goal"></span>				
+			</p>
+			<p>				
 				<span id="Goal_txt2"></span>
 				<span class="integers" id="ints0"></span>
 				<span class="integers" id="ints1"></span>
